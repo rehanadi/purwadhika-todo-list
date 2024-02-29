@@ -1,5 +1,6 @@
 import { Box, Button, Checkbox, Flex } from "@chakra-ui/react"
 import type { Todo } from "./type"
+import { DeleteIcon } from "@chakra-ui/icons"
 
 type TodoItemFC = React.FC<{
   todo: Todo
@@ -8,12 +9,14 @@ type TodoItemFC = React.FC<{
 }>
 
 const TodoItem: TodoItemFC = ({ todo, toggleTodo, deleteTodo }) => {
+  console.log(todo)
   return (
-    <Box mb={2}>
+    <Box mb={3}>
       <Flex justify="space-between">
         <Checkbox 
-          checked={todo.checked} 
+          isChecked={todo.checked}
           onChange={() => toggleTodo(todo.name)}
+          borderColor="lightblue"
         >
           <span style={{ textDecoration: todo.checked ? 'line-through' : 'none' }}>
             {todo.name}
@@ -23,7 +26,9 @@ const TodoItem: TodoItemFC = ({ todo, toggleTodo, deleteTodo }) => {
         <Button 
           colorScheme='red' 
           onClick={() => deleteTodo(todo.name)}
-        >Delete</Button>
+        >
+          <DeleteIcon />
+        </Button>
       </Flex>
     </Box>
   )

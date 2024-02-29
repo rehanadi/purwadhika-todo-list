@@ -1,31 +1,37 @@
-import { useState } from "react"
-import { Flex, Box, Input, Button } from "@chakra-ui/react"
+import { useEffect, useState } from "react"
+import { Heading, Flex, Box, Input, Button } from "@chakra-ui/react"
 import TodoItem from "./TodoItem"
 import type { Todo } from "./type"
 
 function TodoList() {
-  const initialTodos: Todo[] = [{
-    name: 'Create Guest Experience mobile check-in',
-    checked: false
-  }, {
-    name: 'Document current CI/CD process',
-    checked: false
-  }, {
-    name: 'Perform Code Review for final Pillow-Talk Release',
-    checked: false
-  }, {
-    name: 'Implement new Color Palette from Design Team',
-    checked: false
-  }, {
-    name: 'Fix image uploading process for guest check-in',
-    checked: false
-  }, {
-    name: 'Provide on-boarding documentation',
-    checked: false
-  }]
+  const initialTodos: Todo[] = JSON.parse(localStorage.getItem('todos') || JSON.stringify(
+    [{
+      name: 'Create Guest Experience mobile check-in',
+      checked: false
+    }, {
+      name: 'Document current CI/CD process',
+      checked: false
+    }, {
+      name: 'Perform Code Review for final Pillow-Talk Release',
+      checked: false
+    }, {
+      name: 'Implement new Color Palette from Design Team',
+      checked: false
+    }, {
+      name: 'Fix image uploading process for guest check-in',
+      checked: false
+    }, {
+      name: 'Provide on-boarding documentation',
+      checked: false
+    }]
+  ))
 
   const [todos, setTodos] = useState(initialTodos)
   const [name, setName] = useState('')
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos))
+  }, [todos])
 
   const addTodo = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
@@ -42,9 +48,9 @@ function TodoList() {
   }
 
   return (
-    <Box m={10}>
-      <Flex direction="column" gap={4}>
-        <h1>Chores ToDo List</h1>
+    <Box my={5} mx={10}>
+      <Flex direction="column" gap={3}>
+        <Heading as="h1" size="xl" mb={2}>Chores ToDo List</Heading>
 
         <Box width="600px">
           {todos.map((todo, index) => (
@@ -58,13 +64,15 @@ function TodoList() {
         </Box>
         
         <Flex justify="center">
-          <strong>Done</strong> : {todos.filter(todo => todo.checked).length}
+          <Heading as="h4" size="md">
+            Done : {todos.filter(todo => todo.checked).length}
+          </Heading>
         </Flex>
         
         <form>
-          <Flex direction="column" gap={2}>
+          <Flex direction="column" gap={4}>
             <label htmlFor="name">
-              <strong>Add Todo</strong>
+              <Heading as="h4" size="md">Add Todo</Heading>
             </label>
 
             <Input 
@@ -73,6 +81,7 @@ function TodoList() {
               onChange={e => setName(e.target.value)} 
               size='md' 
               placeholder="Enter Todo" 
+              borderColor="lightskyblue"
             />
 
             <Button 
