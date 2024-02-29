@@ -1,5 +1,5 @@
 import { Box, Button, Checkbox, Flex } from "@chakra-ui/react"
-import type { Todo } from "./type"
+import type { Todo } from "./todo-type"
 import { DeleteIcon } from "@chakra-ui/icons"
 
 type TodoItemFC = React.FC<{

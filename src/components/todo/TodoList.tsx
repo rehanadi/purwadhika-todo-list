@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Heading, Flex, Box, Input, Button } from "@chakra-ui/react"
 import TodoItem from "./TodoItem"
-import type { Todo } from "./type"
+import type { Todo } from "./todo-type"
 
 function TodoList() {
   const initialTodos: Todo[] = JSON.parse(localStorage.getItem('todos') || JSON.stringify(
@@ -35,6 +35,7 @@ function TodoList() {
 
   const addTodo = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
+    if (!name) return
     setTodos([ ...todos, { name, checked: false } ])
     setName('')
   }
@@ -44,6 +45,7 @@ function TodoList() {
   }
 
   const deleteTodo = (name: string) => {
+    if (!confirm(`Are you sure want to delete\n"${name}" ?`)) return
     setTodos(todos.filter(todo => todo.name !== name))
   }
 
